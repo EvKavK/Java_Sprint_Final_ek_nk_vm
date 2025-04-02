@@ -12,6 +12,7 @@ public class Membership {
     private String status;
     private double price;
 
+    // constructor
     public Membership(int id, int userID, String type, String startDate, String endDate, String status, double price) {
         this.id = id;
         this.userID = userID;
@@ -21,4 +22,76 @@ public class Membership {
         this.status = status;
         this.price = price;
     }   
+
+    
+    // getters
+    public int getId() {
+        return id;
+    }
+    
+    public int getUserID() {
+        return userID;
+    }
+
+    public String getType() {
+        return type;
+    }
+    
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }   
+
+    public String getStatus() {
+        return status;
+    }   
+
+    public double getPrice() {
+        return price;
+    }   
+
+
+    // setters
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setUserID(int userID) {
+        this.userID = userID;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+    
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    
+    public void setPrice(double price) {
+        this.price = price;
+    }
+    
+    public String toString() {
+        return "Membership{" +
+                "id=" + id +
+                ", userID=" + userID +
+                ", type='" + type + '\'' +
+                ", startDate='" + startDate + '\'' +
+                ", endDate='" + endDate + '\'' +
+                ", status='" + status + '\'' +
+                ", price=" + price +
+                '}';
+    }
 }
