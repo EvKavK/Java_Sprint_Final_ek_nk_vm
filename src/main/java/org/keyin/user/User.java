@@ -104,4 +104,18 @@ public class User {
     public void setRole(String role) {
         this.role = role;
     }
+
+    public String toString() {
+        return "User{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", address='" + address + '\'' +
+                ", city='" + city + '\'' +
+                ", province='" + province + '\'' +
+                ", postalCode='" + postalCode + '\'' +
+                ", role='" + role + '\'' +
+                '}';
+    }
 }
