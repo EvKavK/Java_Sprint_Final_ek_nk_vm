@@ -5,4 +5,13 @@ package org.keyin.user;
 //
 // *//
 public class User {
+    private String username;
+    private String password;
+    private String email;
+    private String phone;
+    private String address;
+    private String city;
+    private String province;
+    private String postalCode;
+    private String role;
 }
