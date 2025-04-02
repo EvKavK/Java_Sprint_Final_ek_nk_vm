@@ -5,6 +5,7 @@ package org.keyin.user;
 //
 // *//
 public class User {
+    private int id;
     private String username;
     private String password;
     private String email;
@@ -17,7 +18,8 @@ public class User {
 
 
     // constructor
-    public User(String username, String password, String email, String phone, String address, String city, String province, String postalCode, String role) {
+    public User(int id,String username, String password, String email, String phone, String address, String city, String province, String postalCode, String role) {
+        this.id = id;
         this.username = username;
         this.password = password;
         this.email = email;
@@ -31,6 +33,10 @@ public class User {
 
 
     // getters
+    public int getID() {
+        return id;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -69,6 +75,10 @@ public class User {
     
     
     // setters
+    public void setID(int id) {
+        this.id = id;
+    }
+
     public void setUsername(String username) {
         this.username = username;
     }
