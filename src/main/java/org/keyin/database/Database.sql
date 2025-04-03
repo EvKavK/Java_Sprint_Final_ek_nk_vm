@@ -1,11 +1,17 @@
 CREATE TABLE users (
-    user_id SERIAL PRIMARY KEY,
-    user_name TEXT,
-    user_email TEXT,
-    user_phoneNumber TEXT,
-    user_address TEXT,
-    user_password TEXT,
-    user_role TEXT
+    id SERIAL PRIMARY KEY,
+    username TEXT,
+    password TEXT,
+    first TEXT,
+    last TEXT,
+    email TEXT,
+    dob DATE,
+    phone TEXT,
+    address TEXT,
+    city TEXT,
+    province TEXT,
+    postalCode TEXT,
+    role TEXT
 );
 
 CREATE TABLE memberships (
