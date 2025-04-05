@@ -1,29 +1,95 @@
 package org.keyin.memberships;
 
 import org.keyin.database.DatabaseConnection;
+import org.keyin.user.User;
 
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 // DAOs are responsible for handling the interactions with the database
 public class MembershipDAO {
 
-    // Here we have a method that adds a membership to the database,
-    // it takes a membership object as a parameter and inserts it into the database
-    // using a prepared statement
-    // THIS IS JUST AN EXAMPLE FOR  YOU TO LOOK AT
+    // CREATE
+    public Membership createUser(Membership membership) throws SQLException {
+        String sql = "INSERT INTO users (username, password, first, last, email, dob, phone, address, city, province, postalCode, role) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        try (Connection conn = DatabaseConnection.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                pstmt.setInt(1, membership.getId());
+                pstmt.setInt(2, membership.getUserID());
+                pstmt.setString(3, membership.getType());
+                pstmt.setDate(4, new java.sql.Date(membership.getStartDate().getTime()));
+                pstmt.setDate(5, new java.sql.Date(membership.getEndDate().getTime()));
+                pstmt.setString(6, membership.getStatus());
+                pstmt.setDouble(7, membership.getPrice());
 
-//    public void addMemberShip() throws SQLException {
-//        String sql = "INSERT INTO memberships (membershiptype, membership_price, membership_description, date_purchased, user_id) VALUES (?, ?, ?, ?, ?)";
-//        try (Connection conn = DatabaseConnection.getConnection();
-//             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-//            pstmt.setString(1, membership.getMembershipType());
-//            pstmt.setInt(2, membership.getMembership_price())
-//            pstmt.setDate(4, Date.valueOf(membership.getDatePurchased()));
-//            pstmt.setInt(5,membership.getUser_id());
-//            pstmt.executeUpdate();
-//        }
-//    }
+                int rowsAffected = pstmt.executeUpdate();
+            if (rowsAffected > 0) {
+                return membership;
+            }
+        }
+        return null;
+    }
+
+    // READ
+    public Membership getMembershipById(int id) throws SQLException {
+        String sql = "SELECT * FROM memberships WHERE id = ?";
+//      DriverManager DatabaseConnector;
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, id);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return new Membership(
+                            rs.getInt("id"),
+                            rs.getInt("userID"),
+                            rs.getString("type"),
+                            rs.getDate("startDate"),
+                            rs.getDate("endDate"),
+                            rs.getString("status"),
+                            rs.getDouble("price")
+                    );
+                }
+            }
+        }
+        return null;
+    }
+
+    // UPDATE
+    public Membership updateMembership(Membership membership) throws SQLException {
+        String sql = "UPDATE memberships SET userID = ?, type = ?, startDate = ?, endDate = ?, status = ?, price = ? WHERE id = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                pstmt.setInt(1, membership.getUserID());
+                pstmt.setString(2, membership.getType());
+                pstmt.setDate(3, new java.sql.Date(membership.getStartDate().getTime()));
+                pstmt.setDate(4, new java.sql.Date(membership.getEndDate().getTime()));
+                pstmt.setString(5, membership.getStatus());
+                pstmt.setDouble(6, membership.getPrice());
+                pstmt.setInt(7, membership.getId());
+
+            int rowsAffected = pstmt.executeUpdate();
+            if (rowsAffected > 0) {
+                return membership;
+            }
+        }
+        return null;
+    }
+
+    // DELETE
+    public Membership deleteMembership (Membership membership) throws SQLException {
+        String sql = "DELETE FROM memberships WHERE id = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                pstmt.setInt(1, membership.getId());
+                
+                int rowsAffected = pstmt.executeUpdate();
+                if (rowsAffected > 0) {
+                    return membership;
+                }
+        }
+        return null;
+    }
 }

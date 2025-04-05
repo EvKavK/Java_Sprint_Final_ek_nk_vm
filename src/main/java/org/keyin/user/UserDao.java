@@ -35,7 +35,7 @@ public class UserDao {
     // READ
     public User getUserByUsername(String username) throws SQLException {
         String sql = "SELECT * FROM users WHERE username = ?";
-        DriverManager DatabaseConnector;
+//        DriverManager DatabaseConnector;
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, username);
