@@ -83,6 +83,7 @@ public class Membership {
         this.price = price;
     }
     
+    @Override
     public String toString() {
         return "Membership{" +
                 "id=" + id +
