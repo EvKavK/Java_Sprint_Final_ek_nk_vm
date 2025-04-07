@@ -17,8 +17,6 @@ public class __GymCLI extends _DynamicMenu {
             "EXIT"
         };
 
-        
-        // show menu
         showMenu(options, (int choice) -> {
             switch (choice) {
                 case 1: registerUser(); 
@@ -28,7 +26,7 @@ public class __GymCLI extends _DynamicMenu {
                 case 3: 
                     System.out.println(ansi()
                         .fgBright(Ansi.Color.CYAN)
-                        .a("Thank you for using Gym Management System!")
+                        .a("Thank you for using the Gym Management System!")
                         .reset()); 
                 break;
                 default:
@@ -42,25 +40,48 @@ public class __GymCLI extends _DynamicMenu {
     
     private void showWelcomeBanner() {
         System.out.println(ansi().eraseScreen().cursor(1, 1));
+        showLogo();
+        System.out.print(ansi().fgBright(Ansi.Color.YELLOW).a("\n\n                        Initializing").reset());
+        sleep(800);
+        System.out.print(ansi().cursorUp(2).eraseLine());
+        System.out.println(ansi().fgBright(Ansi.Color.GREEN).a("\n\n                        System Ready").reset());
+        sleep(1000);
+        System.out.print(ansi().eraseScreen().cursor(1, 1));
+        showLogo();
+    }
+
+    // New method to show the FITNESS logo
+    private void showLogo() {
         System.out.println(ansi().fgBright(Ansi.Color.CYAN).a(
             "\n" +
-            "╔══════════════════════════════════════════╗\n" +
-            "║             GYM MANAGEMENT               ║\n" +
-            "║                 SYSTEM                   ║\n" +
-            "╚══════════════════════════════════════════╝\n" +
-            "         loading... please wait...\n"
+            "╔══════════════════════════════════════════════════════════╗\n" +
+            "║  ███████╗██╗████████╗███╗   ██╗███████╗███████╗███████╗  ║\n" +
+            "║  ██╔════╝██║╚══██╔══╝████╗  ██║██╔════╝██╔════╝██╔════╝  ║\n" +
+            "║  █████╗  ██║   ██║   ██╔██╗ ██║█████╗  ███████╗███████╗  ║\n" +
+            "║  ██╔══╝  ██║   ██║   ██║╚██╗██║██╔══╝  ╚════██║╚════██║  ║\n" +
+            "║  ██║     ██║   ██║   ██║ ╚████║███████╗███████║███████║  ║\n" +
+            "║  ╚═╝     ╚═╝   ╚═╝   ╚═╝  ╚═══╝╚══════╝╚══════╝╚══════╝  ║\n" +
+            "║                                                          ║\n" +
+            "║                    GYM MANAGEMENT SYSTEM                 ║\n" +
+            "╚══════════════════════════════════════════════════════════╝\n" +
+            "\n"
         ).reset());
-        sleep(1000);
     }
 
     // register user
     private void registerUser() {
         System.out.println(ansi().eraseScreen().cursor(1, 1));
-        System.out.println(ansi()
-            .fgBright(Ansi.Color.CYAN)
-            .a("=== USER REGISTRATION ===")
-            .reset()); // TODO: add actual registration method
-        }
+        System.out.println(ansi().fgBright(Ansi.Color.CYAN).a(
+            "\n" +
+            "╔════════════════════════════════════╗\n" +
+            "║         USER REGISTRATION          ║\n" +
+            "║      ┌─────────────────────┐       ║\n" +
+            "║      │  NEW MEMBER SIGNUP  │       ║\n" +
+            "║      └─────────────────────┘       ║\n" +
+            "╚════════════════════════════════════╝\n"
+        ).reset());
+        // TODO: add actual registration method
+    }
 
     // login user
     private void loginUser() {
@@ -70,6 +91,17 @@ public class __GymCLI extends _DynamicMenu {
             "MEMBER", 
             "EXIT"
         };
+
+        System.out.println(ansi().eraseScreen().cursor(1, 1));
+        showLogo();
+        System.out.println(ansi().fgBright(Ansi.Color.CYAN).a(
+            "╔══════════════════════════════════════╗\n" +
+            "║             LOGIN PORTAL             ║\n" +
+            "║      ┌────────────────────────┐      ║\n" +
+            "║      │ Select Your Role Below │      ║\n" +
+            "║      └────────────────────────┘      ║\n" +
+            "╚══════════════════════════════════════╝\n" 
+        ).reset());
 
         showMenu(roles, (int choice) -> {
             switch (choice) {
