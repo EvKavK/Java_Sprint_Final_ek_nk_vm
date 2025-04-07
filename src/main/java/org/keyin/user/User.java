@@ -1,5 +1,4 @@
 package org.keyin.user;
-import java.util.Date;
 
 //*
 // This is the parent class for all users, There are 3 types of users: Trainer, Member, and Admin
@@ -9,10 +8,7 @@ public class User {
     private int id;
     private String username;
     private String password;
-    private String first;
-    private String last;
     private String email;
-    private Date dob;
     private String phone;
     private String address;
     private String city;
@@ -22,14 +18,11 @@ public class User {
 
 
     // constructor
-    public User(int id, String username, String password, String first, String last, String email, Date dob, String phone, String address, String city, String province, String postalCode, String role) {
+    public User(int id,String username, String password, String email, String phone, String address, String city, String province, String postalCode, String role) {
         this.id = id;
         this.username = username;
         this.password = password;
-        this.first = first;
-        this.last = last;
         this.email = email;
-        this.dob = dob;
         this.phone = phone;
         this.address = address;
         this.city = city;
@@ -52,20 +45,8 @@ public class User {
         return password;
     }
 
-    public String getFirst() {
-        return first;
-    }
-
-    public String getLast() {
-        return last;
-    }
-
     public String getEmail() {
         return email;
-    }
-
-    public Date getDob() {
-        return dob;
     }
     
     public String getPhone() {
@@ -106,20 +87,8 @@ public class User {
         this.password = password;
     }
 
-    public void setFirst(String first) {
-        this.first = first;
-    }
-
-    public void setLast(String last) {
-        this.last = last;
-    }
-
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public void setDob(Date dob) {
-        this.dob = dob;
     }
 
     public void setPhone(String phone) {
@@ -146,14 +115,12 @@ public class User {
         this.role = role;
     }
 
+    @Override
     public String toString() {
         return "User{" +
                 "username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", firstname='" + first + '\'' +
-                ", lastname='" + last + '\'' +
                 ", email='" + email + '\'' +
-                ", dob=" + dob +
                 ", phone='" + phone + '\'' +
                 ", address='" + address + '\'' +
                 ", city='" + city + '\'' +

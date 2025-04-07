@@ -8,21 +8,18 @@ public class UserDao {
 
     // CREATE
     public User createUser(User user) throws SQLException {
-        String sql = "INSERT INTO users (username, password, first, last, email, dob, phone, address, city, province, postalCode, role) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO users (username, password, email, phone, address, city, province, postalCode, role) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = DatabaseConnection.getConnection();
             PreparedStatement pstmt = conn.prepareStatement(sql)) {
                 pstmt.setString(1, user.getUsername());
-                pstmt.setString(2, user.getPassword());
-                pstmt.setString(3, user.getFirst());
-                pstmt.setString(4, user.getLast());
-                pstmt.setString(5, user.getEmail());
-                pstmt.setDate(6, new java.sql.Date(user.getDob().getTime()));
-                pstmt.setString(7, user.getPhone());
-                pstmt.setString(8, user.getAddress());
-                pstmt.setString(9, user.getCity());
-                pstmt.setString(10, user.getProvince());
-                pstmt.setString(11, user.getPostalCode());
-                pstmt.setString(12, user.getRole());
+                pstmt.setString(2, user.getPassword());;
+                pstmt.setString(3, user.getEmail());
+                pstmt.setString(4, user.getPhone());
+                pstmt.setString(5, user.getAddress());
+                pstmt.setString(6, user.getCity());
+                pstmt.setString(7, user.getProvince());
+                pstmt.setString(8, user.getPostalCode());
+                pstmt.setString(9, user.getRole());
 
                 int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected > 0) {
@@ -45,10 +42,7 @@ public class UserDao {
                             rs.getInt("id"),
                             rs.getString("username"),
                             rs.getString("password"),
-                            rs.getString("first"),
-                            rs.getString("last"),
                             rs.getString("email"),
-                            rs.getDate("dob"),
                             rs.getString("phone"),
                             rs.getString("address"),
                             rs.getString("city"),
@@ -65,22 +59,19 @@ public class UserDao {
 
     // UPDATE
     public User updateUser(User user) throws SQLException {
-        String sql = "UPDATE users SET username = ?, password = ?, first = ?, last = ?, email = ?, dob = ?, phone = ?, address = ?, city = ?, province = ?, postalCode = ?, role = ? WHERE id = ?";
+        String sql = "UPDATE users SET username = ?, password = ?, email = ?, phone = ?, address = ?, city = ?, province = ?, postalCode = ?, role = ? WHERE id = ?";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, user.getUsername());
             pstmt.setString(2, user.getPassword());
-            pstmt.setString(3, user.getFirst());
-            pstmt.setString(4, user.getLast());
-            pstmt.setString(5, user.getEmail());
-            pstmt.setDate(6, new java.sql.Date(user.getDob().getTime()));
-            pstmt.setString(7, user.getPhone());
-            pstmt.setString(8, user.getAddress());
-            pstmt.setString(9, user.getCity());
-            pstmt.setString(10, user.getProvince());
-            pstmt.setString(11, user.getPostalCode());
-            pstmt.setString(12, user.getRole());
-            pstmt.setInt(13, user.getID());
+            pstmt.setString(3, user.getEmail());
+            pstmt.setString(4, user.getPhone());
+            pstmt.setString(5, user.getAddress());
+            pstmt.setString(6, user.getCity());
+            pstmt.setString(7, user.getProvince());
+            pstmt.setString(8, user.getPostalCode());
+            pstmt.setString(9, user.getRole());
+            pstmt.setInt(10, user.getID());
 
             int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected > 0) {

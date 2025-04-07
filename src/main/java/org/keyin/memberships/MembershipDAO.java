@@ -4,7 +4,6 @@ import org.keyin.database.DatabaseConnection;
 import org.keyin.user.User;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,8 +19,8 @@ public class MembershipDAO {
                 pstmt.setInt(1, membership.getId());
                 pstmt.setInt(2, membership.getUserID());
                 pstmt.setString(3, membership.getType());
-                pstmt.setDate(4, new java.sql.Date(membership.getStartDate().getTime()));
-                pstmt.setDate(5, new java.sql.Date(membership.getEndDate().getTime()));
+                pstmt.setString(4, membership.getStartDate());
+                pstmt.setString(5, membership.getEndDate());
                 pstmt.setString(6, membership.getStatus());
                 pstmt.setDouble(7, membership.getPrice());
 
@@ -46,8 +45,8 @@ public class MembershipDAO {
                             rs.getInt("id"),
                             rs.getInt("userID"),
                             rs.getString("type"),
-                            rs.getDate("startDate"),
-                            rs.getDate("endDate"),
+                            rs.getString("startDate"),
+                            rs.getString("endDate"),
                             rs.getString("status"),
                             rs.getDouble("price")
                     );
@@ -64,8 +63,8 @@ public class MembershipDAO {
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
                 pstmt.setInt(1, membership.getUserID());
                 pstmt.setString(2, membership.getType());
-                pstmt.setDate(3, new java.sql.Date(membership.getStartDate().getTime()));
-                pstmt.setDate(4, new java.sql.Date(membership.getEndDate().getTime()));
+                pstmt.setString(3, membership.getStartDate());
+                pstmt.setString(4, membership.getEndDate());
                 pstmt.setString(5, membership.getStatus());
                 pstmt.setDouble(6, membership.getPrice());
                 pstmt.setInt(7, membership.getId());

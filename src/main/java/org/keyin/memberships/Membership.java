@@ -1,5 +1,4 @@
 package org.keyin.memberships;
-import java.util.Date;
 
 //*\
 // This is class file that represents a membership
@@ -8,13 +7,13 @@ public class Membership {
     private int id;
     private int userID;
     private String type;
-    private Date startDate;
-    private Date endDate;
+    private String startDate;
+    private String endDate;
     private String status;
     private double price;
 
     // constructor
-    public Membership(int id, int userID, String type, Date startDate, Date endDate, String status, double price) {
+    public Membership(int id, int userID, String type, String startDate, String endDate, String status, double price) {
         this.id = id;
         this.userID = userID;
         this.type = type;
@@ -38,11 +37,11 @@ public class Membership {
         return type;
     }
     
-    public Date getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
-    public Date getEndDate() {
+    public String getEndDate() {
         return endDate;
     }   
 
@@ -68,11 +67,11 @@ public class Membership {
         this.type = type;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
     
-    public void setEndDate(Date endDate) {
+    public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
 
@@ -84,6 +83,7 @@ public class Membership {
         this.price = price;
     }
     
+    @Override
     public String toString() {
         return "Membership{" +
                 "id=" + id +
