@@ -12,7 +12,7 @@ import java.sql.SQLException;
 public class MembershipDAO {
 
     // CREATE
-    public Membership createUser(Membership membership) throws SQLException {
+    public Membership createMembership(Membership membership) throws SQLException {
         String sql = "INSERT INTO users (userID, type, startDate, endDate, status, price) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection conn = DatabaseConnection.getConnection();
             PreparedStatement pstmt = conn.prepareStatement(sql)) {
