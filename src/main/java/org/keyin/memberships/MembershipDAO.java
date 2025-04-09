@@ -1,7 +1,6 @@
 package org.keyin.memberships;
 
 import org.keyin.database.DatabaseConnection;
-import org.keyin.user.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
