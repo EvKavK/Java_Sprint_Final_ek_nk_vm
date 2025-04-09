@@ -1,7 +1,6 @@
 package org.keyin.workoutclasses;
 
 import org.keyin.database.DatabaseConnection;
-import org.keyin.user.User;
 
 import java.sql.*;
 import java.util.List;
