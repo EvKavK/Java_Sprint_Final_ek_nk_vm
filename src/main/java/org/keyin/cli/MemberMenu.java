@@ -18,15 +18,12 @@ public class MemberMenu extends _DynamicMenu {
         showMenu(options, (int choice) -> {
             System.out.println("MEMBER MENU");
             switch (choice) {
-                case 1:
+                case 1 ->
                     System.out.println("OPTION 1 SELECTED");
-                    break;
-                case 2:
+                case 2 ->
                     System.out.println("OPTION 2 SELECTED");
-                    break;
-                case 3:
+                case 3 ->
                     System.out.println("OPTION 3 SELECTED");
-                    break;
             }
         });
     }
