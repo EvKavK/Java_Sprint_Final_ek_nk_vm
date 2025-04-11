@@ -2,8 +2,6 @@ package org.keyin.memberships;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 // Service class for membership handle all the business logic
 // and only uses the DAO to interact with the database it does not have methods to do so
