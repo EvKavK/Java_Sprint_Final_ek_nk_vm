@@ -5,6 +5,7 @@ import org.keyin.user.childclasses.Member;
 import org.keyin.user.childclasses.Trainer;
 
 import java.sql.SQLException;
+import java.util.List;
 
 public class UserService {
     private final UserDao userDao;
@@ -55,6 +56,10 @@ public class UserService {
     // admin
     public User getUserByName(String username) throws SQLException {
         return userDao.getUserByUsername(username);
+    }
+
+    public List<User> getAllUsers() throws SQLException {
+        return userDao.getAllUsers();
     }
 
 
