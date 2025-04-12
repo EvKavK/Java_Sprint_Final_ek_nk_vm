@@ -3,6 +3,8 @@ package org.keyin.user;
 import org.keyin.database.DatabaseConnection;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserDao {
 
@@ -55,6 +57,32 @@ public class UserDao {
             }
         }
         return null;
+    }
+
+    // get all users
+    public List<User> getAllUsers() throws SQLException {
+        String sql = "SELECT * FROM users";
+        List<User> users = new ArrayList<>();
+        try (Connection conn = DatabaseConnection.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    User user = new User(
+                        rs.getInt("id"),
+                        rs.getString("username"),
+                        rs.getString("password"),
+                        rs.getString("email"),
+                        rs.getString("phone"),
+                        rs.getString("address"),
+                        rs.getString("city"),
+                        rs.getString("province"),
+                        rs.getString("postalCode"),
+                        rs.getString("role")
+                    );
+                    users.add(user);
+                }
+            }
+        return users;
     }
 
     // UPDATE
