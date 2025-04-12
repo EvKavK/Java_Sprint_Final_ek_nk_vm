@@ -6,6 +6,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 // DAOs are responsible for handling the interactions with the database
 public class MembershipDAO {
@@ -89,5 +91,53 @@ public class MembershipDAO {
                 }
         }
         return null;
+    }
+
+    // get all memberships
+    public List<Membership> getAllMemberships() throws SQLException {
+        String sql = "SELECT * FROM memberships";
+        List<Membership> memberships = new ArrayList<>();
+        try (Connection conn = DatabaseConnection.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery()) {
+            while (rs.next()) {
+                Membership membership = new Membership(
+                    rs.getInt("id"),
+                    rs.getInt("userID"),
+                    rs.getString("type"),
+                    rs.getString("startDate"),
+                    rs.getString("endDate"),
+                    rs.getString("status"),
+                    rs.getDouble("price")
+                );
+                memberships.add(membership);
+            }
+        }
+        return memberships;
+    }
+    
+    // get memberships by user ID
+    public List<Membership> getMembershipsByUserID(int userID) throws SQLException {
+        String sql = "SELECT * FROM memberships WHERE userID = ?";
+        List<Membership> memberships = new ArrayList<>();
+        try (Connection conn = DatabaseConnection.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, userID);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    Membership membership = new Membership(
+                        rs.getInt("id"),
+                        rs.getInt("userID"),
+                        rs.getString("type"),
+                        rs.getString("startDate"),
+                        rs.getString("endDate"),
+                        rs.getString("status"),
+                        rs.getDouble("price")
+                    );
+                    memberships.add(membership);
+                }
+            }
+        }
+        return memberships;
     }
 }
