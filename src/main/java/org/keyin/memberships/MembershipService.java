@@ -2,6 +2,7 @@ package org.keyin.memberships;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.List;
 
 // Service class for membership handle all the business logic
 // and only uses the DAO to interact with the database it does not have methods to do so
@@ -48,16 +49,34 @@ public class MembershipService {
 
 
     // view user expenses
-    public double calcUserExpenses(int userId) throws SQLException {
-        // TODO: needs method in DAO to get all memberships
-        return 0.0; // placeholder
+    public double calcUserExpenses(int userID) throws SQLException {
+        List<Membership> userMemberships = memDAO.getMembershipsByUserID(userID);
+        double totalExpenses = 0.0;
+        for (Membership membership : userMemberships) {
+            totalExpenses += membership.getPrice();
+        }
+        return totalExpenses;
     }
     
 
     // track revenue
     public double calcRevenue() throws SQLException {
-        // TODO: needs method in DAO to get all memberships
-        return 0.0; // placeholder
+        List<Membership> allMemberships = memDAO.getAllMemberships();
+        double totalRevenue = 0.0;
+        for (Membership membership : allMemberships) {
+            totalRevenue += membership.getPrice();
+        }
+        return totalRevenue;
+    }
+    
+    // get all memberships
+    public List<Membership> getAllMemberships() throws SQLException {
+        return memDAO.getAllMemberships();
+    }
+    
+    // get user memberships
+    public List<Membership> getUserMemberships(int userID) throws SQLException {
+        return memDAO.getMembershipsByUserID(userID);
     }
     
 
