@@ -91,4 +91,17 @@ public class MembershipDAO {
         }
         return null;
     }
+
+    public double getTotalRevenue() throws SQLException {
+        String sql = "SELECT SUM(price) AS totalRevenue FROM memberships";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+    
+            if (rs.next()) {
+                return rs.getDouble("totalRevenue");
+            }
+        }
+        return 0.0;
+    }
 }
