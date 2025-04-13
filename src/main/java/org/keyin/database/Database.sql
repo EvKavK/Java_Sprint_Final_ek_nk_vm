@@ -13,7 +13,7 @@ CREATE TABLE users (
 
 CREATE TABLE memberships (
     id SERIAL PRIMARY KEY,
-    user_id INT REFERENCES users(id),
+    userID INT REFERENCES users(id),
     type TEXT,
     start_date DATE,
     end_date DATE,
