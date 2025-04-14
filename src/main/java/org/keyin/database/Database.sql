@@ -29,7 +29,8 @@ CREATE TABLE workoutClasses (
     reps TEXT,
     sets TEXT,
     setDuration TEXT,
-    notes TEXT
+    notes TEXT,
+    trainerID INT REFERENCES users(id)
 );
 
 INSERT INTO users (username, password, email, phone, address, city, province, postalCode, role) 
@@ -48,12 +49,12 @@ VALUES
 (4, 'Senior', '2024-12-01', '2025-11-30', 'Inactive', 45.00),
 (2, 'Premium', '2024-01-01', '2024-12-31', 'Expired', 100.00);
 
-INSERT INTO workoutClasses (name, description, targetArea, reps, sets, setDuration, notes) -- filler data done with chatgpt
+INSERT INTO workoutClasses (name, description, targetArea, reps, sets, setDuration, notes, trainerID) -- filler data done with chatgpt
 VALUES 
-('Yoga for Beginners', 'Introduction to basic yoga poses and breathing techniques', 'Full Body', 'Hold poses', '1', '60 minutes', 'Bring yoga mat and water'),
-('HIIT Training', 'High-intensity intervals with cardio and bodyweight exercises', 'Full Body', '20 reps', '4', '45 minutes', 'Suitable for intermediate fitness levels'),
-('Core Power', 'Focus on abdominal and lower back strengthening', 'Core', '15 reps', '3', '30 minutes', 'Mat work, no equipment needed'),
-('Power Lifting', 'Heavy weight training focusing on major compound movements', 'Full Body', '5 reps', '5', '75 minutes', 'Experience required, max weight limits apply'),
-('Spin Class', 'Indoor cycling with intervals and hill climbs', 'Lower Body', '30-60 seconds', '6', '45 minutes', 'Bring towel and water bottle'),
-('Flexibility Flow', 'Dynamic stretching and mobility work', 'Full Body', '10-15 reps', '2', '40 minutes', 'Great for recovery days'),
-('Boxing Fundamentals', 'Learn basic boxing techniques and combinations', 'Upper Body', '3 minute rounds', '12', '60 minutes', 'Hand wraps required');
+('Yoga for Beginners', 'Introduction to basic yoga poses and breathing techniques', 'Full Body', 'Hold poses', '1', '60 minutes', 'Bring yoga mat and water', 3),
+('HIIT Training', 'High-intensity intervals with cardio and bodyweight exercises', 'Full Body', '20 reps', '4', '45 minutes', 'Suitable for intermediate fitness levels', 3),
+('Core Power', 'Focus on abdominal and lower back strengthening', 'Core', '15 reps', '3', '30 minutes', 'Mat work, no equipment needed', 4),
+('Power Lifting', 'Heavy weight training focusing on major compound movements', 'Full Body', '5 reps', '5', '75 minutes', 'Experience required, max weight limits apply', 4),
+('Spin Class', 'Indoor cycling with intervals and hill climbs', 'Lower Body', '30-60 seconds', '6', '45 minutes', 'Bring towel and water bottle', 3),
+('Flexibility Flow', 'Dynamic stretching and mobility work', 'Full Body', '10-15 reps', '2', '40 minutes', 'Great for recovery days', 4),
+('Boxing Fundamentals', 'Learn basic boxing techniques and combinations', 'Upper Body', '3 minute rounds', '12', '60 minutes', 'Hand wraps required', 3);
