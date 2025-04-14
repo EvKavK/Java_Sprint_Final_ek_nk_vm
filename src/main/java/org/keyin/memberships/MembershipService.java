@@ -28,7 +28,8 @@ public class MembershipService {
             startDate.toString(),
             endDate.toString(),
             "active",
-            price
+            price,
+            durMonths
         );
         
         return memDAO.createMembership(mem);

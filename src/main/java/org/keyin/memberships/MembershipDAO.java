@@ -8,22 +8,25 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.Date;
 
 // DAOs are responsible for handling the interactions with the database
 public class MembershipDAO {
 
     // CREATE
     public Membership createMembership(Membership membership) throws SQLException {
-        String sql = "INSERT INTO users (userID, type, startDate, endDate, status, price) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO memberships (userID, type, startDate, endDate, status, price, durMonths) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = DatabaseConnection.getConnection();
             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-                pstmt.setInt(1, membership.getId());
-                pstmt.setInt(2, membership.getUserID());
-                pstmt.setString(3, membership.getType());
-                pstmt.setString(4, membership.getStartDate());
-                pstmt.setString(5, membership.getEndDate());
-                pstmt.setString(6, membership.getStatus());
-                pstmt.setDouble(7, membership.getPrice());
+                pstmt.setInt(1, membership.getUserID());
+                pstmt.setString(2, membership.getType());
+                Date startDate = Date.valueOf(membership.getStartDate());
+                Date endDate = Date.valueOf(membership.getEndDate());
+                pstmt.setDate(3, startDate);
+                pstmt.setDate(4, endDate);
+                pstmt.setString(5, membership.getStatus());
+                pstmt.setDouble(6, membership.getPrice());
+                pstmt.setInt(7, membership.getDurMonths());
 
                 int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected > 0) {
@@ -49,7 +52,8 @@ public class MembershipDAO {
                             rs.getString("startDate"),
                             rs.getString("endDate"),
                             rs.getString("status"),
-                            rs.getDouble("price")
+                            rs.getDouble("price"),
+                            rs.getInt("durMonths")
                     );
                 }
             }
@@ -59,16 +63,19 @@ public class MembershipDAO {
 
     // UPDATE
     public Membership updateMembership(Membership membership) throws SQLException {
-        String sql = "UPDATE memberships SET userID = ?, type = ?, startDate = ?, endDate = ?, status = ?, price = ? WHERE id = ?";
+        String sql = "UPDATE memberships SET userID = ?, type = ?, startDate = ?, endDate = ?, status = ?, price = ?, durMonths = ? WHERE id = ?";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
                 pstmt.setInt(1, membership.getUserID());
                 pstmt.setString(2, membership.getType());
-                pstmt.setString(3, membership.getStartDate());
-                pstmt.setString(4, membership.getEndDate());
+                Date startDate = Date.valueOf(membership.getStartDate());
+                Date endDate = Date.valueOf(membership.getEndDate());
+                pstmt.setDate(3, startDate);
+                pstmt.setDate(4, endDate);
                 pstmt.setString(5, membership.getStatus());
                 pstmt.setDouble(6, membership.getPrice());
-                pstmt.setInt(7, membership.getId());
+                pstmt.setInt(7, membership.getDurMonths());
+                pstmt.setInt(8, membership.getId());
 
             int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected > 0) {
@@ -108,7 +115,8 @@ public class MembershipDAO {
                     rs.getString("startDate"),
                     rs.getString("endDate"),
                     rs.getString("status"),
-                    rs.getDouble("price")
+                    rs.getDouble("price"),
+                    rs.getInt("durMonths")
                 );
                 memberships.add(membership);
             }
@@ -132,7 +140,8 @@ public class MembershipDAO {
                         rs.getString("startDate"),
                         rs.getString("endDate"),
                         rs.getString("status"),
-                        rs.getDouble("price")
+                        rs.getDouble("price"),
+                        rs.getInt("durMonths")
                     );
                     memberships.add(membership);
                 }

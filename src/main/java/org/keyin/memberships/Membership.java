@@ -11,9 +11,10 @@ public class Membership {
     private String endDate;
     private String status;
     private double price;
+    private int durMonths;
 
     // constructor
-    public Membership(int id, int userID, String type, String startDate, String endDate, String status, double price) {
+    public Membership(int id, int userID, String type, String startDate, String endDate, String status, double price, int durMonths) {
         this.id = id;
         this.userID = userID;
         this.type = type;
@@ -21,6 +22,7 @@ public class Membership {
         this.endDate = endDate;
         this.status = status;
         this.price = price;
+        this.durMonths = durMonths;
     }   
 
     
@@ -51,8 +53,11 @@ public class Membership {
 
     public double getPrice() {
         return price;
-    }   
+    }
 
+    public int getDurMonths() {
+        return durMonths;
+    }
 
     // setters
     public void setId(int id) {
@@ -82,6 +87,10 @@ public class Membership {
     public void setPrice(double price) {
         this.price = price;
     }
+
+    public void setDuration(int durMonths) {
+        this.durMonths = durMonths;
+    }
     
     @Override
     public String toString() {
@@ -93,6 +102,7 @@ public class Membership {
                 ", endDate='" + endDate + '\'' +
                 ", status='" + status + '\'' +
                 ", price=" + price +
+                ", duration='" + durMonths + '\'' +
                 '}';
     }
 }

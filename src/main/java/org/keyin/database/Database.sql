@@ -13,12 +13,13 @@ CREATE TABLE users (
 
 CREATE TABLE memberships (
     id SERIAL PRIMARY KEY,
-    user_id INT REFERENCES users(id),
+    userID INT REFERENCES users(id) ON DELETE CASCADE,
     type TEXT,
-    start_date DATE,
-    end_date DATE,
+    startDate DATE,
+    endDate DATE,
     status TEXT,
-    price DECIMAL(10, 2)
+    price DECIMAL(10, 2),
+    durMonths INT
 );
 
 CREATE TABLE workoutClasses (
@@ -35,19 +36,19 @@ CREATE TABLE workoutClasses (
 
 INSERT INTO users (username, password, email, phone, address, city, province, postalCode, role) 
 VALUES 
-('testuser1', 'testpassword1', 'testemail1@gmail.com', '7091123344', '1 Test Ave.', 'Testville', 'NL', 'A1B 2C3', 'Admin'),
-('testuser2', 'testpassword2', 'testemail2@gmail.com', '7095567788', '2 Testing Rd.', 'Test City', 'NL', 'X8Y 9Z0', 'Member'),
-('testuser3', 'testpassword3', 'testemail3@gmail.com', '7099901122', '3 Alpha St.', 'Alpha Alpines', 'NL', 'X0X 0X0', 'Trainer'),
-('testuser4', 'testpassword4', 'testemail4@gmail.com', '7093345566', '4 Beta Cv.', 'Beta Beach', 'NL', 'E7N 4V3', 'Trainer'),
-('testuser5', 'testpassword5', 'testemail5@gmail.com', '7097789900', '5 Sigma Trl.', 'Sigma Shores', 'NL', 'J3S 4E2', 'Member');
+('testuser1', '$2a$12$AbfVv/fQHJAqpivWedlbm.g6sMWML.O2fVakdzjulZGu9FEkuA1AC', 'testemail1@gmail.com', '7091123344', '1 Test Ave.', 'Testville', 'NL', 'A1B 2C3', 'Admin'),
+('testuser2', '$2a$12$aA4T9Hvl9NKxopta3vf.Je8zcXUQ1v3KO/kYMHYQqQ4lgf3lwQseS', 'testemail2@gmail.com', '7095567788', '2 Testing Rd.', 'Test City', 'NL', 'X8Y 9Z0', 'Member'),
+('testuser3', '$2a$12$O1iMB3LndLgSJ0fp/Vo3s.RH1MmdWEx316f/rxvLlCH3FJGgwmQ8C', 'testemail3@gmail.com', '7099901122', '3 Alpha St.', 'Alpha Alpines', 'NL', 'X0X 0X0', 'Trainer'),
+('testuser4', '$2a$12$BTn2z5bSZD3WPvQ.pBcVbOcIQEubFgh3LB5QkVinKONuS.7Qa6r1.', 'testemail4@gmail.com', '7093345566', '4 Beta Cv.', 'Beta Beach', 'NL', 'E7N 4V3', 'Trainer'),
+('testuser5', '$2a$12$RHhYxejWd5yvVkfm/VAAA.rKoW171xbMKh/y9vhQv70o/FoWXN61G', 'testemail5@gmail.com', '7097789900', '5 Sigma Trl.', 'Sigma Shores', 'NL', 'J3S 4E2', 'Member');
 
-INSERT INTO memberships (user_id, type, start_date, end_date, status, price) 
+INSERT INTO memberships (userID, type, startDate, endDate, status, price, durMonths) 
 VALUES 
-(2, 'Standard', '2025-01-01', '2025-12-31', 'Active', 50.00),
-(2, 'Premium', '2025-01-01', '2025-12-31', 'Active', 100.00),
-(3, 'Student', '2025-01-01', '2025-08-31', 'Active', 40.00),
-(4, 'Senior', '2024-12-01', '2025-11-30', 'Inactive', 45.00),
-(2, 'Premium', '2024-01-01', '2024-12-31', 'Expired', 100.00);
+(2, 'Standard', '2025-01-01', '2025-12-31', 'Active', 50.00, 12),
+(2, 'Premium', '2025-01-01', '2025-12-31', 'Active', 100.00, 12),
+(3, 'Student', '2025-01-01', '2025-08-31', 'Active', 40.00, 7),
+(4, 'Senior', '2024-12-01', '2025-11-30', 'Inactive', 45.00, 12),
+(2, 'Premium', '2024-01-01', '2024-12-31', 'Expired', 100.00, 12);
 
 INSERT INTO workoutClasses (name, description, targetArea, reps, sets, setDuration, notes, trainerID) -- filler data done with chatgpt
 VALUES 
