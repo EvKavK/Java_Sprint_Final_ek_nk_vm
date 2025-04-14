@@ -9,9 +9,10 @@ public class WorkoutClass {
     private String sets;
     private String setDuration;
     private String notes;
+    private int trainerID;
 
     // constructor
-    public WorkoutClass(int id, String name, String description, String targetArea, String reps, String sets, String setDuration, String notes) {
+    public WorkoutClass(int id, String name, String description, String targetArea, String reps, String sets, String setDuration, String notes, int trainerID) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -20,10 +21,11 @@ public class WorkoutClass {
         this.sets = sets;
         this.setDuration = setDuration;
         this.notes = notes;
+        this.trainerID = trainerID;
     }
 
     // getters
-    public int getId() {
+    public int getID() {
         return id;
     }
 
@@ -53,6 +55,10 @@ public class WorkoutClass {
 
     public String getNotes() {
         return notes;
+    }
+    
+    public int getTrainerID() {
+        return trainerID;
     }
 
     // setters
@@ -87,6 +93,10 @@ public class WorkoutClass {
     public void setNotes(String notes) {
         this.notes = notes;
     }
+    
+    public void setTrainerID(int trainerID) {
+        this.trainerID = trainerID;
+    }
 
     @Override
     public String toString() {
@@ -99,6 +109,7 @@ public class WorkoutClass {
                 ", sets='" + sets + '\'' +
                 ", setDuration='" + setDuration + '\'' +
                 ", notes='" + notes + '\'' +
+                ", trainerID='" + trainerID + '\'' +
                 '}';
     }
 }
