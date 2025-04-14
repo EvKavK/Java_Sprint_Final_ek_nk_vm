@@ -3,6 +3,7 @@ package org.keyin.cli;
 import java.util.Objects;
 import java.util.Scanner;
 import java.util.function.IntConsumer;
+import java.sql.SQLException;
 
 import org.fusesource.jansi.Ansi;
 import static org.fusesource.jansi.Ansi.ansi;
@@ -71,10 +72,17 @@ public abstract class _DynamicMenu {
     protected void showSuccess(String message) {
         System.out.println(ansi()
             .fgBright(Ansi.Color.GREEN)
-            .a("Sucess: " + message)
+            .a("Success: " + message)
             .reset());
     }
-
+    
+    // database error common method
+    protected void handleDatabaseError(SQLException e) {
+        System.out.println(ansi()
+            .fgBright(Ansi.Color.RED)
+            .a("DATABASE ERROR OCCURRED: " + e.getMessage())
+            .reset());
+    }
 
     protected Scanner getScanner() {
         return scan;
