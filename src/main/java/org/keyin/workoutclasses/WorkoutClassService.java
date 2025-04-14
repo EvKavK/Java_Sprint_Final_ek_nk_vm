@@ -13,7 +13,7 @@ public class WorkoutClassService {
     }
     
     // new workout class
-    public WorkoutClass createClass(String name, String desc, String target, String reps, String sets, String duration, String notes) throws SQLException {
+    public WorkoutClass createClass(String name, String desc, String target, String reps, String sets, String duration, String notes, int trainerID) throws SQLException {
         WorkoutClass workout = new WorkoutClass(
             0, // set by db
             name,
@@ -22,10 +22,11 @@ public class WorkoutClassService {
             reps,
             sets,
             duration,
-            notes
+            notes,
+            trainerID
         );
         
-        return workoutDAO.createUser(workout);
+        return workoutDAO.createWorkoutClass(workout);
     }
     
     // update workout class
@@ -55,5 +56,10 @@ public class WorkoutClassService {
         }
         
         return filtered;
+    }
+    
+    // get classes by trainer
+    public List<WorkoutClass> getClassesByTrainer(int trainerID) throws SQLException {
+        return workoutDAO.getClassesByTrainerID(trainerID);
     }
 }
