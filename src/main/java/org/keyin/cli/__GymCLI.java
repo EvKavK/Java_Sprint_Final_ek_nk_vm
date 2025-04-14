@@ -12,11 +12,9 @@ import org.keyin.workoutclasses.WorkoutClassService;
 import static org.fusesource.jansi.Ansi.ansi;
 
 public class __GymCLI extends _DynamicMenu {
-    private UserService userService;
-    @SuppressWarnings("unused")
-    private MembershipService membershipService;
-    @SuppressWarnings("unused")
-    private WorkoutClassService workoutClassService;
+    private final UserService userService;
+    private final MembershipService membershipService;
+    private final WorkoutClassService workoutClassService;
     
     // constructor
     public __GymCLI(Scanner scan, UserService userService, MembershipService membershipService, WorkoutClassService workoutClassService) {
@@ -47,37 +45,7 @@ public class __GymCLI extends _DynamicMenu {
                         .reset());
                 }
             } catch (SQLException e) {
-                System.out.println(ansi().fgBright(Ansi.Color.RED).a("DATABASE ERROR: " + e.getMessage()).reset());
-            }
-        });
-    }
-    
-    // constructor for direct use (to be removed after integration)
-    public __GymCLI(Scanner scan) {
-        super(scan);
-        showWelcomeBanner();
-        String[] options = {
-            "REGISTER", 
-            "LOGIN",
-            "EXIT"
-        };
-
-        showMenu(options, (int choice) -> {
-            try {
-                switch (choice) {
-                    case 1 -> registerUser();
-                    case 2 -> loginUser();
-                    case 3 -> System.out.println(ansi()
-                        .fgBright(Ansi.Color.CYAN)
-                        .a("THANK YOU FOR USING THE GYM MANAGEMENT SYSTEM!")
-                        .reset());
-                    default -> System.out.println(ansi()
-                        .fgBright(Ansi.Color.RED)
-                        .a("INVALID CHOICE, TRY AGAIN.")
-                        .reset());
-                }
-            } catch (SQLException e) {
-                System.out.println(ansi().fgBright(Ansi.Color.RED).a("DATABASE ERROR: " + e.getMessage()).reset());
+                handleDatabaseError(e);
             }
         });
     }
@@ -123,13 +91,6 @@ public class __GymCLI extends _DynamicMenu {
             ╚════════════════════════════════════╝
             """).reset());
         
-        if (userService == null) {
-            System.out.println(ansi().fgBright(Ansi.Color.YELLOW).a(
-                "REGISTRATION NOT AVAILABLE."
-            ).reset());
-            return;
-        }
-        
         Scanner scanner = getScanner();
         
         System.out.print(ansi().fgBright(Ansi.Color.WHITE).a("ENTER USERNAME: ").reset());
@@ -149,10 +110,10 @@ public class __GymCLI extends _DynamicMenu {
         System.out.print(ansi().fgBright(Ansi.Color.WHITE).a("ENTER POSTAL CODE: ").reset());
         String postalCode = scanner.nextLine();
         
-        String[] roles = {
-            "MEMBER",
-            "TRAINER",
-            "ADMIN",
+        String[] roleOptions = {
+            _UserRoles.MEMBER.name(),
+            _UserRoles.TRAINER.name(),
+            _UserRoles.ADMIN.name(),
             "CANCEL"
         };
         
@@ -160,16 +121,16 @@ public class __GymCLI extends _DynamicMenu {
             "\nSELECT ROLE:"
         ).reset());
         
-        showMenu(roles, (int choice) -> {
+        showMenu(roleOptions, (int choice) -> {
             try {
                 User user = null;
                 switch (choice) {
                     case 1 -> // member
-                        user = userService.registerMember(username, password, email, phone, address, city, province, postalCode);
+                        user = userService.registerUser(username, password, email, phone, address, city, province, postalCode, _UserRoles.MEMBER);
                     case 2 -> // trainer
-                        user = userService.registerTrainer(username, password, email, phone, address, city, province, postalCode);
+                        user = userService.registerUser(username, password, email, phone, address, city, province, postalCode, _UserRoles.TRAINER);
                     case 3 -> // admin
-                        user = userService.registerAdmin(username, password, email, phone, address, city, province, postalCode);
+                        user = userService.registerUser(username, password, email, phone, address, city, province, postalCode, _UserRoles.ADMIN);
                     case 4 -> { // cancel
                         System.out.println(ansi().fgBright(Ansi.Color.YELLOW).a("REGISTRATION CANCELLED.").reset());
                         return;
@@ -182,7 +143,7 @@ public class __GymCLI extends _DynamicMenu {
                     System.out.println(ansi().fgBright(Ansi.Color.RED).a("REGISTRATION FAILED!").reset());
                 }
             } catch (SQLException e) {
-                System.out.println(ansi().fgBright(Ansi.Color.RED).a("DATABASE ERROR: " + e.getMessage()).reset());
+                handleDatabaseError(e);
             }
         });
     }
@@ -200,46 +161,6 @@ public class __GymCLI extends _DynamicMenu {
             ╚══════════════════════════════════════╝
             """).reset());
         
-        if (userService == null) {
-            String[] roles = {
-                "ADMIN",
-                "TRAINER", 
-                "MEMBER", 
-                "EXIT"
-            };
-            
-            showMenu(roles, (int choice) -> {
-                switch (choice) {
-                    case 1 -> {
-                        System.out.println(ansi().eraseScreen().cursor(1, 1));
-                        @SuppressWarnings("unused")
-                        AdminMenu adminMenu = new AdminMenu(getScanner());
-                    }
-                    case 2 -> {
-                        System.out.println(ansi().eraseScreen().cursor(1, 1));
-                        @SuppressWarnings("unused")
-                        TrainerMenu trainerMenu = new TrainerMenu(getScanner());
-                    }
-                    case 3 -> {
-                        System.out.println(ansi().eraseScreen().cursor(1, 1));
-                        @SuppressWarnings("unused")
-                        MemberMenu memberMenu = new MemberMenu(getScanner());
-                    }
-                    case 4 -> {
-                        System.out.println(ansi()
-                            .fgBright(Ansi.Color.YELLOW)
-                            .a("RETURNING TO MAIN...")
-                            .reset());
-                    }
-                    default -> System.out.println(ansi()
-                        .fgBright(Ansi.Color.RED)
-                        .a("INVALID CHOICE, TRY AGAIN.")
-                        .reset());
-                }
-            });
-            return;
-        }
-        
         Scanner scanner = getScanner();
         
         System.out.print(ansi().fgBright(Ansi.Color.WHITE).a("ENTER USERNAME: ").reset());
@@ -251,35 +172,30 @@ public class __GymCLI extends _DynamicMenu {
         if (user != null) {
             System.out.println(ansi().fgBright(Ansi.Color.GREEN).a("LOGIN SUCCESSFUL! WELCOME " + user.getUsername()).reset());
             
-            switch (user.getRole().toLowerCase()) {
-                case "admin" -> {
-                    System.out.println(ansi().eraseScreen().cursor(1, 1));
-                    @SuppressWarnings("unused")
-                    AdminMenu adminMenu = new AdminMenu(getScanner());
+            _UserRoles role = _UserRoles.fromDbValue(user.getRole());
+            if (role != null) {
+                switch (role) {
+                    case ADMIN -> {
+                        System.out.println(ansi().eraseScreen().cursor(1, 1));
+                        @SuppressWarnings("unused")
+                        AdminMenu adminMenu = new AdminMenu(getScanner(), userService, membershipService);
+                    }
+                    case TRAINER -> {
+                        System.out.println(ansi().eraseScreen().cursor(1, 1));
+                        @SuppressWarnings("unused")
+                        TrainerMenu trainerMenu = new TrainerMenu(getScanner(), user, workoutClassService, membershipService);
+                    }
+                    case MEMBER -> {
+                        System.out.println(ansi().eraseScreen().cursor(1, 1));
+                        @SuppressWarnings("unused")
+                        MemberMenu memberMenu = new MemberMenu(getScanner(), user, workoutClassService, membershipService);
+                    }
                 }
-                case "trainer" -> {
-                    System.out.println(ansi().eraseScreen().cursor(1, 1));
-                    @SuppressWarnings("unused")
-                    TrainerMenu trainerMenu = new TrainerMenu(getScanner());
-                }
-                case "member" -> {
-                    System.out.println(ansi().eraseScreen().cursor(1, 1));
-                    @SuppressWarnings("unused")
-                    MemberMenu memberMenu = new MemberMenu(getScanner());
-                }
-                default -> {
-                    System.out.println(ansi().fgBright(Ansi.Color.RED).a("Unknown role: " + user.getRole()).reset());
-                }
+            } else {
+                System.out.println(ansi().fgBright(Ansi.Color.RED).a("Unknown role: " + user.getRole()).reset());
             }
         } else {
             System.out.println(ansi().fgBright(Ansi.Color.RED).a("LOGIN FAILED! INVALID CREDENTIALS.").reset());
         }
-    }
-
-    // main method
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        @SuppressWarnings("unused")
-        __GymCLI gymCLI = new __GymCLI(scanner);
     }
 }
